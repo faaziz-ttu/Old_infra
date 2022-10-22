@@ -3,8 +3,9 @@
   - name: Web server
     hosts: web_servers
     roles:
-      - agama
-      - nginx
       - test_connection
+      - agama
+      - uwsgi
+      - nginx
       - users
     become: yes

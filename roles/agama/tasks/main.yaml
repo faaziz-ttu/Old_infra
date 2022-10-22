@@ -9,10 +9,16 @@
       path: /opt/agama
       state: directory
       mode: '0755'
-      
+  
+  - name: Ownership of directory
+    ansible.builtin.file:
+      path: /opt/agama
+      state: directory
+      recurse: yes
+      owner: agama 
+   
   - name: Installs agama.py
     ansible.builtin.get_url:
       url: https://raw.githubusercontent.com/hudolejev/agama/master/agama.py
       dest: /opt/agama/
-      
-  
+      mode: '0440'
