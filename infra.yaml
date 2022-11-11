@@ -7,5 +7,5 @@
       - agama
       - uwsgi
       - nginx
-      - users
+
     become: yes

@@ -1,9 +1,9 @@
 ---
-
+#step 1:
   - name: User AGAMA
     ansible.builtin.user:
       name: agama
-      
+#step 2:   
   - name: Creates directory
     ansible.builtin.file:
       path: /opt/agama
@@ -16,9 +16,22 @@
       state: directory
       recurse: yes
       owner: agama 
-   
+#step 3:
+  #Done by accessing server via ssh ,not sure about it
+ #- name: Install application dependencies
+ #  ansible.builtin.apt:
+ #    name: flask-sqlalchemy
+ #    state: present
+ # error says that no file called flask-sqlalchemy
+#step 4:
   - name: Installs agama.py
     ansible.builtin.get_url:
       url: https://raw.githubusercontent.com/hudolejev/agama/master/agama.py
       dest: /opt/agama/
       mode: '0440'
+      
+      
+      
+      
+      
+      
