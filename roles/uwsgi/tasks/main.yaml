@@ -7,6 +7,7 @@
   - name: Install "uwsgi-plugin-python3" package
     ansible.builtin.apt:
       name: uwsgi-plugin-python3
+      update_cache: yes
 #step 2:    
   - name: Copy agama.ini
     ansible.builtin.copy:
@@ -17,12 +18,10 @@
     ansible.builtin.service:
       name: uwsgi
       state: started
-      enaled: yes
+      enabled: yes
+    notify: Restart uwsgi 
 #step 4: not finished
-  - name: uWSGI is restarted automatically
-    ansible.builtin.service:
-      state: restarted
-    when: 
+   
 #next step: adding role - done
 
 #you can start task 3 but remember that sqlite is not finished,  also STEP 4        

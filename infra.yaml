@@ -5,6 +5,7 @@
     roles:
       - test_connection
       - agama
+      - uwsgi
       - nginx
 
     become: yes

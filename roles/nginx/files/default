@@ -1,0 +1,8 @@
+server {
+	listen 80 default_server;
+
+	location /etc/uwsgi/ {
+		uwsgi_pass 127.0.0.1:9000;
+		include uwsgi_params;
+	}
+}
