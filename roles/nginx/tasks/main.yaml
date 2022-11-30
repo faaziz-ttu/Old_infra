@@ -4,15 +4,7 @@
     ansible.builtin.apt:
       name: nginx
     #for solving big red error activate nginx
-  - name: Updating cache
-    ansible.builtin.apt:
-      update_cache: yes
 
-  - name: Index page.
-    ansible.builtin.copy:
-      src: index.html
-      dest: /var/www/html/index.html
-      #########
   - name: Copy default to somewhere
     ansible.builtin.copy:
       src: default
@@ -24,4 +16,5 @@
       name: nginx
       state: started
       enabled: yes
+    become: yes
       
