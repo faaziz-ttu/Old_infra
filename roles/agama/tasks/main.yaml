@@ -20,6 +20,10 @@
     ansible.builtin.apt:
       name: python3-flask-sqlalchemy
       update_cache: yes
+
+  - name: Install pymysql
+    ansible.builtin.apt:
+      name: python3-pymysql
       
 #step 4:
   - name: Installs agama.py
@@ -28,7 +32,5 @@
       dest: /opt/agama
       mode: 0755      
       
-  - name: Install pymysql
-    ansible.builtin.apt:
-      name: python3-pymysql
+
       
