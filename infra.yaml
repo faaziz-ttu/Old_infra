@@ -1,4 +1,9 @@
 ---
+  - name: Collect information about all VMs
+    hosts: all
+    tasks:
+      - setup:
+
   - name: Init
     hosts: all
     roles:
@@ -8,7 +13,13 @@
   - name: Database server
     hosts: db_servers
     roles:
-      - mysql      
+      - mysql    
+    become: yes
+
+  - name: DNS server
+    hosts: dns_servers
+    roles:
+      - bind    
     become: yes
 
   - name: Web server

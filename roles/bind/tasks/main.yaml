@@ -1,0 +1,40 @@
+---
+
+  - name: Install bind
+    ansible.builtin.apt:
+      name: 
+        - bind9
+        - python3-dnspython 
+      state: latest
+      
+  - name: Copy resolv.conf
+    ansible.builtin.template:
+      src: templates/resolv.conf
+      dest: /etc/resolv.conf
+    notify: 
+        - Restart bind 
+        - Reload rndc     
+
+  - name: Configure options.j2
+    ansible.builtin.template:
+      src: templates/named.conf.options.j2
+      dest: /etc/bind/named.conf.options
+    notify: Restart bind
+  
+  - name: Configure local.j2
+    ansible.builtin.template:
+      src: templates/named.conf.local.j2
+      dest: /etc/bind/named.conf.local     
+    notify: Restart bind
+    
+  - name: Configure fetirix.io.j2
+    ansible.builtin.template:
+      src: templates/db.fetirix.j2
+      dest: /var/lib/bind/db.fetirix.io
+    notify: Reload rndc
+
+  - name: Start service bind9, if not started
+    ansible.builtin.service:
+      name: bind9
+      state: started
+      enabled: yes
