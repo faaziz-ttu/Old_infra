@@ -5,15 +5,13 @@
       name: 
         - bind9
         - python3-dnspython 
-      state: latest
-      
-  - name: Copy resolv.conf
-    ansible.builtin.template:
-      src: templates/resolv.conf
-      dest: /etc/resolv.conf
-    notify: 
-        - Restart bind 
-        - Reload rndc     
+      state: latest   
+
+  - name: Start service bind9, if not started
+    ansible.builtin.service:
+      name: bind9
+      state: started
+      enabled: yes
 
   - name: Configure options.j2
     ansible.builtin.template:
@@ -33,8 +31,12 @@
       dest: /var/lib/bind/db.fetirix.io
     notify: Reload rndc
 
-  - name: Start service bind9, if not started
-    ansible.builtin.service:
-      name: bind9
-      state: started
-      enabled: yes
+  - name: Copy resolv.conf
+    ansible.builtin.template:
+      src: templates/resolv.conf
+      dest: /etc/resolv.conf
+    notify: 
+        - Restart bind 
+        - Reload rndc  
+
+
