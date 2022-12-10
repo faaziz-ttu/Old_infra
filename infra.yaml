@@ -29,3 +29,16 @@
       - uwsgi
       - nginx
     become: yes
+
+  - name: Node Exporter
+    hosts: node_exporters
+    roles:
+      - node_exporter
+    become: yes
+
+  - name: Configure Prometheus
+    hosts: prometheus
+    roles:
+      - prometheus
+      - nginx
+    become: yes

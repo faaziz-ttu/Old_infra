@@ -6,8 +6,8 @@
     #for solving big red error activate nginx
 
   - name: Copy default to somewhere
-    ansible.builtin.copy:
-      src: default
+    ansible.builtin.template:
+      src: default.j2
       dest: /etc/nginx/sites-enabled/default
     notify: Restart Nginx
     
