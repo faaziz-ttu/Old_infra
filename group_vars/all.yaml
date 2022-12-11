@@ -9,11 +9,21 @@ mysql_password: !vault |
           3365656131386632650a616365626564323364333661643939636665356337383431333864623934
           6133
 
+mysql_exporter_user: mysql_exporter_second
+mysql_exporter_pass: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          65373661303538626661363735326364323366393064323435636664363531613164366332633337
+          6439653138653438666533646237323462376235383935360a363764393432326531623962633532
+          61346261323961656563633131613466313634393735623338373061643461386639323461373162
+          3366326166353037610a653431323638373162356233633031396264393363336537613137376238
+          3430
+
 dns_forwarders:
   - 8.8.8.8
   - 1.1.1.1
   - 9.9.9.9
   - 9.9.9.10
+
 
 local_network: 192.168.42.0/23
 localhost: 127.0.0.0/8  
@@ -35,3 +45,20 @@ dns_record:
  - name: faaziz-ttu-1
    type: A
    ipaddress: 192.168.42.{{ hostvars['faaziz-ttu-1']['ansible_default_ipv4']['address'].split('.')[3] }}
+   
+prometheus_exporters:
+  
+  node:
+    port: 9100
+
+  nginx:
+    port: 9113
+
+  mysql:
+    port: 9104
+
+  bind:
+    port: 9119   
+
+grafana_port: 3000
+docker_grafana_port: 3001

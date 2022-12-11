@@ -1,0 +1,42 @@
+---
+- name: Setup
+  hosts: all
+  become: yes
+  roles:
+    - init
+
+- name: Reconfigure Nginx servers
+  hosts: grafana
+  become: yes
+  roles:
+    - nginx
+    
+- name: Install MySQL exporter
+  hosts: db_servers
+  become: yes
+  roles:
+    - mysql
+    - mysql_exporter
+  tags: mysql
+
+- name: Install Bind exporter
+  hosts: dns_servers
+  become: yes
+  roles:
+    - bind_exporter
+
+
+- name: Install Nginx exporter
+  hosts: prometheus
+  become: yes
+  roles:
+    - nginx_exporter
+  tags: nginx_exporter
+ 
+
+- name: Install Grafana
+  hosts: grafana
+  become: yes
+  roles:
+    - grafana
+  tags: grafana

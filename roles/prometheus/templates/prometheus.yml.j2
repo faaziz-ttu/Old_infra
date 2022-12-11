@@ -26,3 +26,29 @@ scrape_configs:
         - 'faaziz-ttu-1.{{ fqdn }}:9100'
         - 'faaziz-ttu-2.{{ fqdn }}:9100'
         - 'faaziz-ttu-3.{{ fqdn }}:9100'
+
+#New jobs for Lab 7 - Grafana
+
+  - job_name: nginx_exporters
+    static_configs:
+      - targets:
+          {% for vm in groups['web_servers'] %}
+           - {{ hostvars[vm]['inventory_hostname'] }}.{{ fqdn }}:{{ prometheus_exporters['nginx']['port'] }}
+          #  - {{ hostvars[vm]['inventory_hostname'] }}:{{ prometheus_exporters['nginx']['port'] }}
+          {% endfor %}
+
+  - job_name: mysql_exporter
+    static_configs:
+      - targets:
+          {% for vm in groups['db_servers'] %}
+           - {{ hostvars[vm]['inventory_hostname'] }}.{{ fqdn }}:{{ prometheus_exporters['mysql']['port'] }}
+        #    - {{ hostvars[vm]['inventory_hostname'] }}:{{ prometheus_exporters['mysql']['port'] }}
+          {% endfor %}
+
+  - job_name: bind_exporter
+    static_configs:
+      - targets:
+          {% for vm in groups['web_servers'] %}
+           - {{ hostvars[vm]['inventory_hostname'] }}.{{ fqdn }}:{{ prometheus_exporters['bind']['port'] }}
+        #    - {{ hostvars[vm]['inventory_hostname'] }}:{{ prometheus_exporters['bind']['port'] }}
+          {% endfor %}

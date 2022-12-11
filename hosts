@@ -1,5 +1,5 @@
-faaziz-ttu-1 ansible_host=193.40.156.67 ansible_port=8722 ansible_user=ubuntu
-faaziz-ttu-2 ansible_host=193.40.156.67 ansible_port=15222 ansible_user=ubuntu
+faaziz-ttu-1 ansible_host=193.40.156.67 ansible_port=7722 ansible_user=ubuntu
+faaziz-ttu-2 ansible_host=193.40.156.67 ansible_port=13522 ansible_user=ubuntu
 
 [db_servers]
 faaziz-ttu-2
@@ -16,4 +16,7 @@ faaziz-ttu-1
 faaziz-ttu-2
 
 [prometheus]
+faaziz-ttu-2
+
+[grafana]
 faaziz-ttu-2

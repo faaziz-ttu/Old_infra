@@ -13,13 +13,15 @@
   - name: Database server
     hosts: db_servers
     roles:
-      - mysql    
+      - mysql   
+      - mysql_exporter 
     become: yes
 
   - name: DNS server
     hosts: dns_servers
     roles:
-      - bind    
+      - bind   
+      - bind_exporter 
     become: yes
 
   - name: Web server
@@ -40,5 +42,13 @@
     hosts: prometheus
     roles:
       - prometheus
-      - nginx
+      - nginx_exporter
+    tags: nginx_exporter
+ 
+  - name: Install Grafana
+    hosts: grafana
     become: yes
+    roles:
+      - grafana
+      - nginx
+    tags: grafana
