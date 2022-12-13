@@ -1,4 +1,5 @@
 ---
+
   - name: Collect information about all VMs
     hosts: all
     tasks:
@@ -13,15 +14,13 @@
   - name: Database server
     hosts: db_servers
     roles:
-      - mysql   
-      - mysql_exporter 
+      - mysql    
     become: yes
 
   - name: DNS server
     hosts: dns_servers
     roles:
-      - bind   
-      - bind_exporter 
+      - bind    
     become: yes
 
   - name: Web server
@@ -42,13 +41,35 @@
     hosts: prometheus
     roles:
       - prometheus
-      - nginx_exporter
-    tags: nginx_exporter
- 
-  - name: Install Grafana
-    hosts: grafana
-    become: yes
-    roles:
-      - grafana
       - nginx
-    tags: grafana
+    become: yes
+    
+- name: Install MySQL exporter
+  hosts: db_servers
+  become: yes
+  roles:
+    - mysql_exporter
+  tags: mysql
+
+- name: Install Bind exporter
+  hosts: dns_servers
+  become: yes
+  roles:
+    - bind_exporter
+
+
+- name: Install Nginx exporter
+  hosts: prometheus
+  become: yes
+  roles:
+    - nginx_exporter
+  tags: nginx_exporter
+ 
+
+- name: Install Grafana
+  hosts: grafana
+  become: yes
+  roles:
+    - grafana
+  tags: grafana
+    

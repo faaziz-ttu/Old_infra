@@ -11,6 +11,14 @@ server {
 		proxy_set_header Host $http_host;
         }     
         
+        {% if inventory_hostname in groups['prometheus'] %}
+        #Reverse proxy for Prometheus
+        
+        location /prometheus {
+        	proxy_pass http://{{localhost_address}}:9090;
+        }
+        {% endif %}  
+        
         {% if inventory_hostname in groups['node_exporters'] %}
         #Reverse proxy for node exporters
 
@@ -42,20 +50,12 @@ server {
 		proxy_pass http://{{localhost_address}}:{{ prometheus_exporters['bind']['port'] }}/metrics;
 	}
         {% endif %}
-        
-	{% if inventory_hostname in groups['prometheus'] %}
-        #Reverse proxy for Prometheus
-        
-        location /prometheus {
-        	proxy_pass http://{{localhost_address}}:9090;
-        }
-        {% endif %}  
           
         {% if inventory_hostname in groups['grafana'] %}
         #Reverse proxy for Grafana
         
         location /grafana {
-        	proxy_pass http://{{localhost_address}}:{{ grafana_port }};
+        	proxy_pass http://{{localhost_address}}:3000;
         }
         {% endif %}     
 }

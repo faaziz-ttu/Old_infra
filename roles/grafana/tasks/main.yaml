@@ -16,11 +16,11 @@
     ansible.builtin.apt:
       deb: /opt/grafana_7.2.1_amd64.deb 
 
-  #- name: Reconfigure Grafana
-  #  ansible.builtin.template:
-   #   src: main.json
-  #    dest: /etc/grafana/main.json
-  #  notify: Restart Grafana
+  - name: Reconfigure Grafana
+    ansible.builtin.template:
+      src: grafana.ini.j2
+      dest: /etc/grafana/grafana.ini
+    notify: Restart Grafana
 
   - name: Start Grafana
     ansible.builtin.service:
